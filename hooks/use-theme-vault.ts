@@ -20,7 +20,7 @@ interface ThemeVaultState {
 export const useThemeVault = create<ThemeVaultState>()(
   persist(
     (set, get) => ({
-      currentTheme: "light-minimal",
+      currentTheme: "playful-retro",
       previewTheme: null,
       userTier: 3, // Free tier by default
       isPreviewMode: false,

@@ -122,6 +122,7 @@
     @apply border-border outline-ring;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -139,4 +140,93 @@
 .theme-terminal-hacker ::-webkit-scrollbar-thumb {
   background: var(--primary);
   border-radius: 0;
+}
+
+/* Landing page atmosphere and live-canvas motion */
+.landing-hero {
+  isolation: isolate;
+}
+
+.landing-hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(to right, color-mix(in oklch, var(--foreground) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, var(--foreground) 7%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+  content: "";
+  mask-image: linear-gradient(to bottom, black, transparent 72%);
+  opacity: 0.38;
+}
+
+.landing-hero>.grid>* {
+  animation: landing-rise 0.7s ease-out both;
+}
+
+.landing-hero>.grid> :nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.landing-window {
+  animation: landing-float 6s ease-in-out infinite;
+  box-shadow: 0 28px 80px color-mix(in oklch, var(--foreground) 16%, transparent), 0 2px 0 color-mix(in oklch, var(--foreground) 12%, transparent);
+}
+
+.landing-preview {
+  animation: landing-preview-in 0.45s ease-out;
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.landing-preview:hover {
+  filter: saturate(1.08) contrast(1.02);
+  transform: scale(1.015);
+}
+
+.landing-marquee {
+  background: color-mix(in oklch, var(--primary) 5%, var(--background));
+}
+
+@keyframes landing-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes landing-float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes landing-preview-in {
+  from {
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .landing-hero>.grid>*,
+  .landing-window,
+  .landing-preview {
+    animation: none;
+  }
 }
